@@ -5,6 +5,6 @@ import Resources.Images;
 
 public class Dot extends BaseStatic{
     public Dot(int x, int y, int width, int height, Handler handler) {
-        super(x, y, width, height, handler, Images.pacmanDots[1]);
+        super(x, y, width, height, handler, Images.smallDot);
     }
 }

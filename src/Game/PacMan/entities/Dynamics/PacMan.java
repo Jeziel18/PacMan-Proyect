@@ -1,6 +1,8 @@
 package Game.PacMan.entities.Dynamics;
 
+import Game.PacMan.World.MapBuilder;
 import Game.PacMan.entities.Statics.BaseStatic;
+import Game.PacMan.entities.Statics.BigDot;
 import Game.PacMan.entities.Statics.BoundBlock;
 import Main.Handler;
 import Resources.Animation;
@@ -17,7 +19,16 @@ public class PacMan extends BaseDynamic{
     public boolean moving = true,turnFlag = false;
     public Animation leftAnim,rightAnim,upAnim,downAnim;
     int turnCooldown = 20;
-
+    //Variable de spawn de Pac-Man (Jeziel)
+    int spawnx = 126;
+    int spawny = 648;
+    int pacLife = 3;
+    long spawncooldown = 5*60*60; //Tengo que arreglar el cooldown, pero esta funcionando parcialmente bien
+    
+    
+    
+     
+    
 
     public PacMan(int x, int y, int width, int height, Handler handler) {
         super(x, y, width, height, handler, Images.pacmanRight[0]);
@@ -25,10 +36,20 @@ public class PacMan extends BaseDynamic{
         rightAnim = new Animation(128,Images.pacmanRight);
         upAnim = new Animation(128,Images.pacmanUp);
         downAnim = new Animation(128,Images.pacmanDown);
+        
+        
+                   
     }
 
     @Override
     public void tick(){
+    	
+    	for (BaseStatic block:handler.getMap().getBlocksOnMap()) {
+            if(block instanceof BigDot){
+                ((BigDot)block).blinkBigDot.tick();
+            }
+        }
+    	
 
         switch (facing){
             case "Right":
@@ -85,7 +106,7 @@ public class PacMan extends BaseDynamic{
         PacMan pacman = this;
         ArrayList<BaseStatic> bricks = handler.getMap().getBlocksOnMap();
         ArrayList<BaseDynamic> enemies = handler.getMap().getEnemiesOnMap();
-
+        
         boolean pacmanDies = false;
         boolean toUp = moving && facing.equals("Up");
 
@@ -113,8 +134,19 @@ public class PacMan extends BaseDynamic{
             }
         }
 
-        if(pacmanDies) {
-            handler.getMap().reset();
+        if(pacmanDies) { 
+        	handler.getMap().reset();
+        	
+        	pacLife --;
+        	
+        	do {
+        		spawncooldown --;
+        		System.out.println("cooldown: " + spawncooldown);
+        	}
+        	while(spawncooldown > 0);
+        	
+        		x = spawnx;
+            	y = spawny;   
         }
     }
 
@@ -162,8 +194,21 @@ public class PacMan extends BaseDynamic{
         }
 
         if(pacmanDies) {
-            handler.getMap().reset();
-        }else {
+        	handler.getMap().reset();
+        	
+        	pacLife --;
+        	
+        	do {
+        		spawncooldown --;
+        		System.out.println("cooldown: " + spawncooldown);
+        	}
+        	while(spawncooldown > 0);
+        	
+        		x = spawnx;
+            	y = spawny;   
+        	    	
+        }
+        
 
             for (BaseStatic brick : bricks) {
                 if (brick instanceof BoundBlock) {
@@ -178,7 +223,8 @@ public class PacMan extends BaseDynamic{
                 }
             }
         }
-    }
+    
+
 
 
     public boolean checkPreHorizontalCollision(String facing){

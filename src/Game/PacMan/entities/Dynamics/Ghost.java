@@ -9,6 +9,7 @@ import Resources.Images;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Ghost extends BaseDynamic{
 
@@ -17,6 +18,7 @@ public class Ghost extends BaseDynamic{
     public boolean moving = true,turnFlag = false;
     public Animation leftAnim,rightAnim,upAnim,downAnim;
     int turnCooldown = 30;
+    //Random movement = new Random (3);
 
 
     public Ghost(int x, int y, int width, int height, Handler handler) {
@@ -24,12 +26,11 @@ public class Ghost extends BaseDynamic{
         leftAnim = new Animation(128,Images.pacmanLeft);
         rightAnim = new Animation(128,Images.pacmanRight);
         upAnim = new Animation(128,Images.pacmanUp);
-        downAnim = new Animation(128,Images.pacmanDown);
+        downAnim = new Animation(128,Images.pacmanDown);        
     }
 
     @Override
     public void tick(){
-
         switch (facing){
             case "Right":
                 x+=velX;

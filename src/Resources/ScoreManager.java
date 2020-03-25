@@ -17,6 +17,8 @@ public class ScoreManager {
     //Pacman
     private int pacmanHighScore=0;
     private int pacmanCurrentScore=0;
+    // Para guardar el high score
+    private int pacmanRealHighScore = 0;
 
     public ScoreManager(Handler handler) {
         this.handler = handler;
@@ -47,11 +49,24 @@ public class ScoreManager {
     }
 
     public int getPacmanHighScore() {
+    	
+    	 // update high score (Jeziel)
+        if(pacmanHighScore < pacmanCurrentScore) {
+        	pacmanHighScore = pacmanCurrentScore;
+        	
+        	
+        	
+        }
+       
         return pacmanHighScore;
+       
+        	
+        
     }
 
     public void setPacmanHighScore(int pacmanHighScore) {
         this.pacmanHighScore = pacmanHighScore;
+       
     }
 
     public int getPacmanCurrentScore() {

@@ -37,6 +37,9 @@ public class Images {
     public static BufferedImage[] bound;
     public static BufferedImage intro;
     public static BufferedImage start;
+    public static BufferedImage pacMenu; //Foto del menu (Jeziel)
+    public static BufferedImage smallDot;
+
 
 
 
@@ -76,7 +79,7 @@ public class Images {
 
             pauseBackground = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Pause.png"));
 
-            selectionBackground = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Selection.png"));
+            selectionBackground = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Selection(2).png"));
 
             galagaCopyright = ImageIO.read(getClass().getResourceAsStream("/UI/Misc/Copyright.png"));
 
@@ -130,11 +133,16 @@ public class Images {
             galagaPlayerLaser = galagaSpriteSheet.crop(365 ,219,3,8);
 
             pacmanImageSheet = ImageIO.read(getClass().getResourceAsStream("/UI/SpriteSheets/PacMan/Background.png"));
+            
+            //Foto para el menu (Hay que arreglarla para que quede mejor
+            pacMenu = ImageIO.read(getClass().getResourceAsStream("/UI/SpriteSheets/PacMan/pac-menu.png"));
+            
             pacmanSpriteSheet = new SpriteSheet(pacmanImageSheet);
             map1 = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/PacManMaps/map1.png"));
             ghost = pacmanSpriteSheet.crop(456,64,16,16);
-            pacmanDots[0] = pacmanSpriteSheet.crop(643,18,16,16);
-            pacmanDots[1] = pacmanSpriteSheet.crop(623,18,16,16);
+            pacmanDots[0] = pacmanSpriteSheet.crop(643,18,16,16); //BigDot
+            pacmanDots[1] = pacmanSpriteSheet.crop(548,221,49,13); // Picture for Big Dot Animation
+            smallDot = pacmanSpriteSheet.crop(623,18,16,16); //Small dot
 
             bound[0] = pacmanSpriteSheet.crop(603,18,16,16);//single
             bound[1] = pacmanSpriteSheet.crop(615,37,16,16);//right open

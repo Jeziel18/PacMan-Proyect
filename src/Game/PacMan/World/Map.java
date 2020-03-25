@@ -3,6 +3,7 @@ package Game.PacMan.World;
 import Game.PacMan.entities.Dynamics.BaseDynamic;
 import Game.PacMan.entities.Dynamics.PacMan;
 import Game.PacMan.entities.Statics.BaseStatic;
+import Game.PacMan.entities.Statics.BigDot;
 import Main.Handler;
 
 import java.awt.*;
@@ -41,6 +42,11 @@ public class Map {
         for (BaseStatic block:blocksOnMap) {
 
             g2.drawImage(block.sprite, block.x, block.y, block.width, block.height, null);
+            
+            if(block instanceof BigDot) {
+            	g2.drawImage(((BigDot) block).blinkBigDot.getCurrentFrame(), block.x, block.y, block.width, block.height, null);
+
+            }
 
         }
         for (BaseDynamic entity:enemiesOnMap) {
@@ -80,5 +86,6 @@ public class Map {
     }
 
     public void reset() {
+    	
     }
 }
