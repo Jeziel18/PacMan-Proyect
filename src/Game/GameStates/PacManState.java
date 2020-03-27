@@ -77,6 +77,35 @@ public class PacManState extends State {
         if (Mode.equals("Stage")){
             Graphics2D g2 = (Graphics2D) g.create();
             handler.getMap().drawMap(g2);
+            
+            //Phase 2, Darle vida a PacMan
+            if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {
+            	handler.getPacman().pacLife ++;
+            	
+            	if(handler.getPacman().pacLife >= 3) {
+                	handler.getPacman().pacLife = 3;
+                }
+            }
+            
+            
+            if(handler.getPacman().pacLife == 1) {
+            	g.drawImage(Images.pacmanLife,1150,800,handler.getWidth()/10,handler.getHeight()/10,null); //Foto de vida de PacMan
+            }
+            
+            else if(handler.getPacman().pacLife == 2) {
+            	g.drawImage(Images.pacmanLife,1150,800,handler.getWidth()/10,handler.getHeight()/10,null); //Foto de vida de PacMan
+            	g.drawImage(Images.pacmanLife,1400,800,handler.getWidth()/10,handler.getHeight()/10,null); 
+            }
+            else if(handler.getPacman().pacLife <= 0) {
+            	g.drawImage(Images.pacmanDots[1],1400,800,handler.getWidth()/10,handler.getHeight()/10,null); 
+            }
+            
+            else {
+            	g.drawImage(Images.pacmanLife,1150,800,handler.getWidth()/10,handler.getHeight()/10,null); //Foto de vida de PacMan
+            	g.drawImage(Images.pacmanLife,1400,800,handler.getWidth()/10,handler.getHeight()/10,null); 
+            	g.drawImage(Images.pacmanLife,1650,800,handler.getWidth()/10,handler.getHeight()/10,null); 
+            }
+            
             g.setColor(Color.WHITE);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 32));
             g.drawString("Score: " + handler.getScoreManager().getPacmanCurrentScore(),(handler.getWidth()/2) + handler.getWidth()/6, 25);

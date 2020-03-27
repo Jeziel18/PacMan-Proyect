@@ -28,7 +28,10 @@ public class Images {
     public static BufferedImage[] galagaEnemyBee;
 
     public static BufferedImage map1;
-    public static BufferedImage ghost;
+    public static BufferedImage ghostRed;//(Jeziel)
+    //public static BufferedImage ghostPink;//(Jeziel)
+    //public static BufferedImage ghostBlue;//(Jeziel)
+    //public static BufferedImage ghostOrange;//(Jeziel)
     public static BufferedImage[] pacmanDots;
     public static BufferedImage[] pacmanRight;
     public static BufferedImage[] pacmanLeft;
@@ -39,6 +42,11 @@ public class Images {
     public static BufferedImage start;
     public static BufferedImage pacMenu; //Foto del menu (Jeziel)
     public static BufferedImage smallDot;
+    public static BufferedImage[] pacmanDies;//(Jeziel)
+    public static BufferedImage pacmanLife; // Big PacMan for Life (Jeziel)
+
+    
+    
 
 
 
@@ -67,6 +75,7 @@ public class Images {
         pacmanUp = new BufferedImage[2];
         pacmanDown = new BufferedImage[2];
         bound = new BufferedImage[16];
+        pacmanDies = new BufferedImage[39];
 
 
         try {
@@ -134,15 +143,16 @@ public class Images {
 
             pacmanImageSheet = ImageIO.read(getClass().getResourceAsStream("/UI/SpriteSheets/PacMan/Background.png"));
             
-            //Foto para el menu (Hay que arreglarla para que quede mejor
+            //(Jeziel)
             pacMenu = ImageIO.read(getClass().getResourceAsStream("/UI/SpriteSheets/PacMan/pac-menu.png"));
             
             pacmanSpriteSheet = new SpriteSheet(pacmanImageSheet);
             map1 = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/PacManMaps/map1.png"));
-            ghost = pacmanSpriteSheet.crop(456,64,16,16);
+            ghostRed = pacmanSpriteSheet.crop(456,64,16,16); //Fantasma rojo
             pacmanDots[0] = pacmanSpriteSheet.crop(643,18,16,16); //BigDot
-            pacmanDots[1] = pacmanSpriteSheet.crop(548,221,49,13); // Picture for Big Dot Animation
+            pacmanDots[1] = pacmanSpriteSheet.crop(548,221,49,13); // Picture for Big Dot Animation (Jeziel)
             smallDot = pacmanSpriteSheet.crop(623,18,16,16); //Small dot
+            pacmanLife = pacmanSpriteSheet.crop(519,15,32,34); //Big PacMan for Life (Jeziel)
 
             bound[0] = pacmanSpriteSheet.crop(603,18,16,16);//single
             bound[1] = pacmanSpriteSheet.crop(615,37,16,16);//right open
@@ -160,6 +170,53 @@ public class Images {
             bound[13] = pacmanSpriteSheet.crop(494,191,16,16);//right
             bound[14] = pacmanSpriteSheet.crop(479,208,16,16);//top
             bound[15] = pacmanSpriteSheet.crop(479,223,16,16);//bottom
+            
+            //Animacion de PacMan Muriendo (Jeziel)
+            pacmanDies[0] = pacmanSpriteSheet.crop(488,0,15,15);//Complete
+            pacmanDies[1] = pacmanSpriteSheet.crop(504,0,15,15);//Opening
+            pacmanDies[2] = pacmanSpriteSheet.crop(520,0,15,15);//Opening
+            pacmanDies[3] = pacmanSpriteSheet.crop(536,0,15,15);//Opening
+            pacmanDies[4] = pacmanSpriteSheet.crop(552,0,15,15);//Opening
+            pacmanDies[5] = pacmanSpriteSheet.crop(568,0,15,15);//Opening
+            pacmanDies[6] = pacmanSpriteSheet.crop(584,0,15,15);//Opening
+            pacmanDies[7] = pacmanSpriteSheet.crop(600,0,15,15);//Opening
+            pacmanDies[8] = pacmanSpriteSheet.crop(616,0,15,15);//Opening
+            pacmanDies[9] = pacmanSpriteSheet.crop(632,0,15,15);//Opening
+            pacmanDies[10] = pacmanSpriteSheet.crop(648,0,15,15);//Opening
+            pacmanDies[11] = pacmanSpriteSheet.crop(664,4,15,15);//Explosion
+            
+            pacmanDies[12] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[13] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[14] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[15] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[16] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[17] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[18] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[19] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[20] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[21] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[22] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[23] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[24] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[25] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[26] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[27] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[28] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[29] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[30] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[31] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[32] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[33] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[34] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[35] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[36] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[37] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+            pacmanDies[38] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
+
+            
+
+
+            
 
             pacmanRight[0] = pacmanSpriteSheet.crop(473,1,12,13);
             pacmanRight[1] = pacmanSpriteSheet.crop(489,1,13,13);
