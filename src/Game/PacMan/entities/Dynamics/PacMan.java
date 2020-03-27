@@ -96,7 +96,6 @@ public class PacMan extends BaseDynamic{
         if(pacmandied) {
         	
         	if(spawncooldown < 0) {
-        		pacLife --;
         		x = spawnx;
             	y = spawny;
             	pacmanDedAnim.reset();
@@ -153,6 +152,7 @@ public class PacMan extends BaseDynamic{
                 
         if(pacmanDies) { 
         	handler.getMap().reset();
+    		pacLife --;
           	pacmandied = true;
           	handler.getMusicHandler().playEffect("pacman_death.wav");   
         }
@@ -203,6 +203,7 @@ public class PacMan extends BaseDynamic{
         }
 
         if(pacmanDies) {
+    		pacLife --;
         	handler.getMap().reset();
         	pacmandied = true;
         	handler.getMusicHandler().playEffect("pacman_death.wav");
