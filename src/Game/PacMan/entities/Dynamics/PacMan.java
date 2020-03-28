@@ -17,17 +17,12 @@ public class PacMan extends BaseDynamic{
     protected double velX,velY,speed = 1;
     public String facing = "Left";
     public boolean moving = true,turnFlag = false;
-    public Animation leftAnim,rightAnim,upAnim,downAnim;
+    public Animation leftAnim,rightAnim,upAnim,downAnim, pacmanDedAnim;
     int turnCooldown = 20;
-    //Variable de spawn de Pac-Man (Jeziel)
-    int spawnx = 126;
-    int spawny = 648;
-    int pacLife = 3;
-    long spawncooldown = 5*60*60; //Tengo que arreglar el cooldown, pero esta funcionando parcialmente bien
-    
-    
-    
-     
+    int spawnx = 126 , spawny = 648; // Spawn original de PacMan (Jeziel)
+    public int pacLife = 3; // Vida de PacMan (Jeziel)
+    int spawncooldown = 5*60; // Cooldown para cuando pacman muere vuelva a spawn (Jeziel)
+    public boolean pacmandied = false; // Boolean para cuando pacman muere (vertical y horizontal collision) (Jeziel)
     
 
     public PacMan(int x, int y, int width, int height, Handler handler) {
@@ -35,10 +30,8 @@ public class PacMan extends BaseDynamic{
         leftAnim = new Animation(128,Images.pacmanLeft);
         rightAnim = new Animation(128,Images.pacmanRight);
         upAnim = new Animation(128,Images.pacmanUp);
-        downAnim = new Animation(128,Images.pacmanDown);
-        
-        
-                   
+        downAnim = new Animation(128,Images.pacmanDown);  
+        pacmanDedAnim = new Animation(128, Images.pacmanDies);
     }
 
     @Override
@@ -98,9 +91,32 @@ public class PacMan extends BaseDynamic{
             checkHorizontalCollision();
         }else{
             checkVerticalCollisions();
+        }  
+        
+        if(pacmandied) {
+        	
+        	if(spawncooldown < 0) {
+        		pacLife --;
+        		x = spawnx;
+            	y = spawny;
+            	pacmanDedAnim.reset();
+            	spawncooldown = 5*60;
+            	pacmandied = false;
+            	
+            	if(pacLife <= 0) {
+            		pacLife = 0;
+            	}
+     
+        	}
+        	else {
+        		pacmanDedAnim.tick();
+        		spawncooldown --;
+        	}
         }
-
+        
     }
+    
+    
 
     public void checkVerticalCollisions() {
         PacMan pacman = this;
@@ -125,28 +141,20 @@ public class PacMan extends BaseDynamic{
                 }
             }
         }
-
+        
+        //Se le puso el or(||) para que cuando aprietes "P", mate a PacMan (Jeziel)
         for(BaseDynamic enemy : enemies){
             Rectangle enemyBounds = !toUp ? enemy.getTopBounds() : enemy.getBottomBounds();
-            if (pacmanBounds.intersects(enemyBounds)) {
+            if (pacmanBounds.intersects(enemyBounds) || handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)){
                 pacmanDies = true;
                 break;
             }
         }
-
+                
         if(pacmanDies) { 
         	handler.getMap().reset();
-        	
-        	pacLife --;
-        	
-        	do {
-        		spawncooldown --;
-        		System.out.println("cooldown: " + spawncooldown);
-        	}
-        	while(spawncooldown > 0);
-        	
-        		x = spawnx;
-            	y = spawny;   
+          	pacmandied = true;
+          	handler.getMusicHandler().playEffect("pacman_death.wav");   
         }
     }
 
@@ -184,10 +192,11 @@ public class PacMan extends BaseDynamic{
         boolean toRight = moving && facing.equals("Right");
 
         Rectangle pacmanBounds = toRight ? pacman.getRightBounds() : pacman.getLeftBounds();
-
+        
+      //Se le puso el or(||) para que cuando aprietes "P", mate a PacMan (Jeziel)
         for(BaseDynamic enemy : enemies){
             Rectangle enemyBounds = !toRight ? enemy.getRightBounds() : enemy.getLeftBounds();
-            if (pacmanBounds.intersects(enemyBounds)) {
+            if (pacmanBounds.intersects(enemyBounds) || handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)) {
                 pacmanDies = true;
                 break;
             }
@@ -195,17 +204,9 @@ public class PacMan extends BaseDynamic{
 
         if(pacmanDies) {
         	handler.getMap().reset();
+        	pacmandied = true;
+        	handler.getMusicHandler().playEffect("pacman_death.wav");
         	
-        	pacLife --;
-        	
-        	do {
-        		spawncooldown --;
-        		System.out.println("cooldown: " + spawncooldown);
-        	}
-        	while(spawncooldown > 0);
-        	
-        		x = spawnx;
-            	y = spawny;   
         	    	
         }
         

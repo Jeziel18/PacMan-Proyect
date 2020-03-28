@@ -23,7 +23,7 @@ public class Ghost extends BaseDynamic{
 	boolean justSpawned;
 
 	public Ghost(int x, int y, int width, int height, Handler handler) {
-		super(x, y, width, height, handler, Images.ghost);
+		super(x, y, width, height, handler, Images.ghostRed);
 		leftAnim = new Animation(128,Images.pacmanLeft);
 		rightAnim = new Animation(128,Images.pacmanRight);
 		upAnim = new Animation(128,Images.pacmanUp);
@@ -264,5 +264,4 @@ public class Ghost extends BaseDynamic{
 		turnFlag = true;
 		turnCooldown = 30;
 	}
-
-}
+	}

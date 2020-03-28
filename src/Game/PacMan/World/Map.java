@@ -1,6 +1,7 @@
 package Game.PacMan.World;
 
 import Game.PacMan.entities.Dynamics.BaseDynamic;
+import Game.PacMan.entities.Dynamics.Ghost;
 import Game.PacMan.entities.Dynamics.PacMan;
 import Game.PacMan.entities.Statics.BaseStatic;
 import Game.PacMan.entities.Statics.BigDot;
@@ -50,7 +51,8 @@ public class Map {
 
         }
         for (BaseDynamic entity:enemiesOnMap) {
-            if (entity instanceof PacMan) {
+            if (entity instanceof PacMan) {            	
+            	
                 switch (((PacMan) entity).facing){
                     case "Right":
                         g2.drawImage(((PacMan) entity).rightAnim.getCurrentFrame(), entity.x, entity.y, entity.width, entity.height, null);
@@ -65,10 +67,17 @@ public class Map {
                         g2.drawImage(((PacMan) entity).downAnim.getCurrentFrame(), entity.x, entity.y, entity.width, entity.height, null);
                         break;
                 }
+                
+                //If que hace que la animacion corra cuando PacMan muere (Jeziel)
+                if(handler.getPacman().pacmandied) {
+                    g2.drawImage(((PacMan) entity).pacmanDedAnim.getCurrentFrame(), entity.x, entity.y, entity.width, entity.height, null);
+                }
+                
             }
             else {
                 g2.drawImage(entity.sprite, entity.x, entity.y, entity.width, entity.height, null);
             }
+       
         }
 
     }
