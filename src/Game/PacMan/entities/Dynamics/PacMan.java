@@ -19,10 +19,12 @@ public class PacMan extends BaseDynamic{
     public boolean moving = true,turnFlag = false;
     public Animation leftAnim,rightAnim,upAnim,downAnim, pacmanDedAnim;
     int turnCooldown = 20;
-    int spawnx = 126 , spawny = 648; // Spawn original de PacMan (Jeziel)
+    public int spawnx = 126 , spawny = 648; // Spawn original de PacMan (Jeziel)
     public int pacLife = 3; // Vida de PacMan (Jeziel)
     int spawncooldown = 5*60; // Cooldown para cuando pacman muere vuelva a spawn (Jeziel)
     public boolean pacmandied = false; // Boolean para cuando pacman muere (vertical y horizontal collision) (Jeziel)
+    public boolean resetpacman = false;
+   
     
 
     public PacMan(int x, int y, int width, int height, Handler handler) {
@@ -31,12 +33,12 @@ public class PacMan extends BaseDynamic{
         rightAnim = new Animation(128,Images.pacmanRight);
         upAnim = new Animation(128,Images.pacmanUp);
         downAnim = new Animation(128,Images.pacmanDown);  
-        pacmanDedAnim = new Animation(128, Images.pacmanDies);
+        pacmanDedAnim = new Animation(350, Images.pacmanDies);
     }
 
     @Override
     public void tick(){
-    	
+   
     	for (BaseStatic block:handler.getMap().getBlocksOnMap()) {
             if(block instanceof BigDot){
                 ((BigDot)block).blinkBigDot.tick();
@@ -95,15 +97,23 @@ public class PacMan extends BaseDynamic{
         
         if(pacmandied) {
         	
-        	if(spawncooldown < 0) {
+        	if(spawncooldown <= 0) {
+        		pacLife --;
         		x = spawnx;
             	y = spawny;
             	pacmanDedAnim.reset();
             	spawncooldown = 5*60;
-            	pacmandied = false;
-     
+            	speed = 1;
+            	if(pacLife <= 0) {
+            		pacLife = 0;
+            	}
+            	facing = "Left";
+            	pacmandied = false;	
+            	
         	}
         	else {
+        		
+        		speed = 0;
         		pacmanDedAnim.tick();
         		spawncooldown --;
         	}
@@ -148,13 +158,9 @@ public class PacMan extends BaseDynamic{
                 
         if(pacmanDies) { 
         	handler.getMap().reset();
-    		
           	pacmandied = true;
-          	handler.getMusicHandler().playEffect("pacman_death.wav");  
-          	pacLife --;
-          	if(pacLife <= 0) {
-        		pacLife = 0;
-        	}
+          	handler.getMusicHandler().playEffect("pacman_death.wav");
+          	
         }
     }
 
@@ -203,18 +209,11 @@ public class PacMan extends BaseDynamic{
         }
 
         if(pacmanDies) {
-    		
         	handler.getMap().reset();
         	pacmandied = true;
         	handler.getMusicHandler().playEffect("pacman_death.wav");
-        	pacLife --;
-        	if(pacLife <= 0) {
-        		pacLife = 0;
-        	}
-        	
         	    	
         }
-        
 
             for (BaseStatic brick : bricks) {
                 if (brick instanceof BoundBlock) {

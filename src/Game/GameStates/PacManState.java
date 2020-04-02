@@ -18,7 +18,9 @@ public class PacManState extends State {
     private UIManager uiManager;
     public String Mode = "Intro";
     public int startCooldown = 60*4;//seven seconds for the music to finish
-
+    
+    public boolean reset = false;
+    public int reset_cooldown = 3*60;
     public PacManState(Handler handler){
         super(handler);
         handler.setMap(MapBuilder.createMap(Images.map1, handler));
@@ -66,6 +68,22 @@ public class PacManState extends State {
                 Mode = "Menu";
             }
         }
+        
+        if(reset) {
+        	if(reset_cooldown <= 0) {
+        		reset_cooldown = 3*60;
+        		handler.getPacman().pacLife = 3;
+        		reset = false;
+        		Mode = "Intro"; // Cambiamos el state cuando PacMan pierde todas las vidas (Por el momento "Menu")
+        		handler.getPacman().setX(handler.getPacman().spawnx); //Lo volvemos a spawn en sus coordenadas originales (X)
+        		handler.getPacman().setY(handler.getPacman().spawny); //Lo volvemos a spawn en sus coordenadas originales (Y)
+        		handler.getScoreManager().setPacmanCurrentScore(0); //El score se iguala a 0
+
+        	}
+        	else {
+        		reset_cooldown --;
+        	}
+        }
 
 
 
@@ -73,7 +91,7 @@ public class PacManState extends State {
 
     @Override
     public void render(Graphics g) {
-
+    	    	
         if (Mode.equals("Stage")){
             Graphics2D g2 = (Graphics2D) g.create();
             handler.getMap().drawMap(g2);
@@ -96,14 +114,19 @@ public class PacManState extends State {
             	g.drawImage(Images.pacmanLife,1150,800,handler.getWidth()/10,handler.getHeight()/10,null); //Foto de vida de PacMan
             	g.drawImage(Images.pacmanLife,1400,800,handler.getWidth()/10,handler.getHeight()/10,null); 
             }
-            else if(handler.getPacman().pacLife <= 0) {
-            	g.drawImage(Images.pacmanDots[1],1400,800,handler.getWidth()/10,handler.getHeight()/10,null); 
+            else if(handler.getPacman().pacLife <= 0) { // Game Over
+            	reset = true;
+            	g.setColor(Color.RED);
+                g.setFont(new Font("TimesRoman", Font.PLAIN, 150));
+                g.drawString("Game Over", 1150, 550);
+                
             }
             
             else {
             	g.drawImage(Images.pacmanLife,1150,800,handler.getWidth()/10,handler.getHeight()/10,null); //Foto de vida de PacMan
             	g.drawImage(Images.pacmanLife,1400,800,handler.getWidth()/10,handler.getHeight()/10,null); 
-            	g.drawImage(Images.pacmanLife,1650,800,handler.getWidth()/10,handler.getHeight()/10,null); 
+            	g.drawImage(Images.pacmanLife,1650,800,handler.getWidth()/10,handler.getHeight()/10,null);
+            	
             }
             
             g.setColor(Color.WHITE);
@@ -112,8 +135,18 @@ public class PacManState extends State {
             g.drawString("High-Score: " + handler.getScoreManager().getPacmanHighScore(),(handler.getWidth()/2) + handler.getWidth()/6, 75);
         }else if (Mode.equals("Menu")){
             g.drawImage(Images.start,0,0,handler.getWidth()/2,handler.getHeight(),null);
+            
+        	g.setColor(Color.RED);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+            g.drawString("" + handler.getScoreManager().getPacmanHighScore(), 365, 100);
+        	
+
         }else{
             g.drawImage(Images.intro,0,0,handler.getWidth()/2,handler.getHeight(),null);
+            
+            g.setColor(Color.RED);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+            g.drawString("" + handler.getScoreManager().getPacmanHighScore(), 365, 100);
 
         }
     }
