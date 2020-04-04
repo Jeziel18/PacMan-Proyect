@@ -13,6 +13,7 @@ import Resources.Images;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class MapBuilder {
 
@@ -29,6 +30,10 @@ public class MapBuilder {
 
 	public static Map createMap(BufferedImage mapImage, Handler handler){
 		Map mapInCreation = new Map(handler);
+		Random fruitR = new Random();
+		int fruit = fruitR.nextInt(30);
+		int frape = 0;
+		
 		for (int i = 0; i < mapImage.getWidth(); i++) {
 			for (int j = 0; j < mapImage.getHeight(); j++) {
 				int currentPixel = mapImage.getRGB(i, j);
@@ -49,6 +54,20 @@ public class MapBuilder {
 					//mapInCreation.addEnemy(ghost);
 				}else if(currentPixel == dotC){
 					BaseStatic dot = new Dot(xPos,yPos,pixelMultiplier,pixelMultiplier,handler);
+					
+					fruit ++;
+	                    if(fruit % 30 == 0){
+	                    dot.setFruit();
+	                     dot.setFruit(frape);
+	                    if(frape < 4) {  
+	                    	frape ++;
+	                    	}
+	                    else if (frape == 4) { 
+	                    	frape = 0;
+	                    	}
+	         
+	                    }
+					
 					mapInCreation.addBlock(dot);
 				}else if(currentPixel == bigDotC){
 					BaseStatic bigDot = new BigDot(xPos,yPos,pixelMultiplier,pixelMultiplier,handler);

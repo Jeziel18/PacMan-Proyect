@@ -5,7 +5,9 @@ import Game.PacMan.entities.Dynamics.Ghost;
 import Game.PacMan.entities.Dynamics.PacMan;
 import Game.PacMan.entities.Statics.BaseStatic;
 import Game.PacMan.entities.Statics.BigDot;
+import Game.PacMan.entities.Statics.Dot;
 import Main.Handler;
+import Resources.Images;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,7 +21,9 @@ public class Map {
     private double bottomBorder;
     private Random rand;
     private int mapBackground;
-
+   
+   
+    
     public Map(Handler handler) {
         this.handler=handler;
         this.rand = new Random();
@@ -40,14 +44,22 @@ public class Map {
     }
 
     public void drawMap(Graphics2D g2) {
+    	
+    	
         for (BaseStatic block:blocksOnMap) {
 
             g2.drawImage(block.sprite, block.x, block.y, block.width, block.height, null);
-            
+                       
             if(block instanceof BigDot) {
             	g2.drawImage(((BigDot) block).blinkBigDot.getCurrentFrame(), block.x, block.y, block.width, block.height, null);
-
             }
+            
+            if(block.getIsFruit() && block instanceof Dot) {
+                g2.drawImage(Images.fruits[block.getrandFruit()], block.x, block.y, block.width, block.height, null);
+                
+               
+            }
+
 
         }
         for (BaseDynamic entity:enemiesOnMap) {

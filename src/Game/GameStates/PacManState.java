@@ -39,10 +39,21 @@ public class PacManState extends State {
                 for (BaseStatic blocks: handler.getMap().getBlocksOnMap()){
                     if (blocks instanceof Dot){
                         if (blocks.getBounds().intersects(handler.getPacman().getBounds())){
+                        	
+                        	if (blocks.getIsFruit()){
+                        		handler.getMusicHandler().playEffect("pacman_chomp.wav");
+                                toREmove.add(blocks);
+                                handler.getScoreManager().addPacmanCurrentScore(120);	
+                        	}
+                        	else {
                             handler.getMusicHandler().playEffect("pacman_chomp.wav");
                             toREmove.add(blocks);
                             handler.getScoreManager().addPacmanCurrentScore(10);
+                        	}
                         }
+                        
+                    
+                        
                     }else if (blocks instanceof BigDot){
                         if (blocks.getBounds().intersects(handler.getPacman().getBounds())){
                             handler.getMusicHandler().playEffect("pacman_chomp.wav");
@@ -74,6 +85,7 @@ public class PacManState extends State {
         		reset_cooldown = 3*60;
         		handler.getPacman().pacLife = 3;
         		reset = false;
+        		startCooldown = 4*60;
         		Mode = "Intro"; // Cambiamos el state cuando PacMan pierde todas las vidas (Por el momento "Menu")
         		handler.getPacman().setX(handler.getPacman().spawnx); //Lo volvemos a spawn en sus coordenadas originales (X)
         		handler.getPacman().setY(handler.getPacman().spawny); //Lo volvemos a spawn en sus coordenadas originales (Y)
@@ -137,16 +149,16 @@ public class PacManState extends State {
             g.drawImage(Images.start,0,0,handler.getWidth()/2,handler.getHeight(),null);
             
         	g.setColor(Color.RED);
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-            g.drawString("" + handler.getScoreManager().getPacmanHighScore(), 365, 100);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
+            g.drawString("" + handler.getScoreManager().getPacmanHighScore(), 310, 70);
         	
 
         }else{
             g.drawImage(Images.intro,0,0,handler.getWidth()/2,handler.getHeight(),null);
             
             g.setColor(Color.RED);
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-            g.drawString("" + handler.getScoreManager().getPacmanHighScore(), 365, 100);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
+            g.drawString("" + handler.getScoreManager().getPacmanHighScore(), 310, 70);
 
         }
     }

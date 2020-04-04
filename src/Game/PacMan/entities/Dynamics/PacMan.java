@@ -95,6 +95,13 @@ public class PacMan extends BaseDynamic{
             checkVerticalCollisions();
         }  
         
+        if(handler.getPacManState().startCooldown <= 0) {
+        	speed = 1;
+        }
+        else {
+        	speed = 0;
+        }
+        
         if(pacmandied) {
         	
         	if(spawncooldown <= 0) {

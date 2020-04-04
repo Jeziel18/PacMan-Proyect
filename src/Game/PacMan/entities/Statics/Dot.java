@@ -12,4 +12,5 @@ public class Dot extends BaseStatic{
         super(x, y, width, height, handler, Images.smallDot); 
     }
     
+    
 }
