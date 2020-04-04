@@ -44,6 +44,8 @@ public class Images {
     public static BufferedImage smallDot;
     public static BufferedImage[] pacmanDies;//(Jeziel)
     public static BufferedImage pacmanLife; // Big PacMan for Life (Jeziel)
+    public static BufferedImage[] fruits;
+
 
     
     
@@ -75,7 +77,8 @@ public class Images {
         pacmanUp = new BufferedImage[2];
         pacmanDown = new BufferedImage[2];
         bound = new BufferedImage[16];
-        pacmanDies = new BufferedImage[39];
+        pacmanDies = new BufferedImage[16];
+        fruits = new BufferedImage[6];
 
 
         try {
@@ -184,39 +187,18 @@ public class Images {
             pacmanDies[9] = pacmanSpriteSheet.crop(632,0,15,15);//Opening
             pacmanDies[10] = pacmanSpriteSheet.crop(648,0,15,15);//Opening
             pacmanDies[11] = pacmanSpriteSheet.crop(664,4,15,15);//Explosion
-            
             pacmanDies[12] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
             pacmanDies[13] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
             pacmanDies[14] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
             pacmanDies[15] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[16] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[17] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[18] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[19] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[20] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[21] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[22] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[23] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[24] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[25] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[26] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[27] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[28] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[29] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[30] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[31] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[32] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[33] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[34] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[35] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[36] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[37] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-            pacmanDies[38] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
-
-            
 
 
-            
+            //Frutas (Jeziel)
+            fruits[0] = pacmanSpriteSheet.crop(489,49,15,15); //Cherry
+            fruits[1] = pacmanSpriteSheet.crop(504,49,15,15); //Fresa
+            fruits[2] = pacmanSpriteSheet.crop(521,49,15,15); //Melocoton
+            fruits[3] = pacmanSpriteSheet.crop(537,49,15,15); //Manzana
+            fruits[4] = pacmanSpriteSheet.crop(553,49,15,15); //Pera
 
             pacmanRight[0] = pacmanSpriteSheet.crop(473,1,12,13);
             pacmanRight[1] = pacmanSpriteSheet.crop(489,1,13,13);
