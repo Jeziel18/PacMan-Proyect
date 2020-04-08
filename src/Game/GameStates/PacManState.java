@@ -3,6 +3,7 @@ package Game.GameStates;
 import Display.UI.UIManager;
 import Game.PacMan.World.MapBuilder;
 import Game.PacMan.entities.Dynamics.BaseDynamic;
+import Game.PacMan.entities.Dynamics.Ghost;
 import Game.PacMan.entities.Statics.BaseStatic;
 import Game.PacMan.entities.Statics.BigDot;
 import Game.PacMan.entities.Statics.Dot;
@@ -19,6 +20,9 @@ public class PacManState extends State {
     public String Mode = "Intro";
     public int startCooldown = 60*4;//seven seconds for the music to finish
     
+    //Ghosts are edible
+    public boolean ghostFlash = false;
+    
     public boolean reset = false;
     public int reset_cooldown = 3*60;
     public PacManState(Handler handler){
@@ -32,8 +36,10 @@ public class PacManState extends State {
     public void tick() {
         if (Mode.equals("Stage")){
             if (startCooldown<=0) {
-                for (BaseDynamic entity : handler.getMap().getEnemiesOnMap()) {
-                    entity.tick();
+                if(!handler.getPacman().isSpawningGhost()) {
+                	for (BaseDynamic entity : handler.getMap().getEnemiesOnMap()) {
+                        entity.tick();
+                    }
                 }
                 ArrayList<BaseStatic> toREmove = new ArrayList<>();
                 for (BaseStatic blocks: handler.getMap().getBlocksOnMap()){
@@ -59,7 +65,11 @@ public class PacManState extends State {
                             handler.getMusicHandler().playEffect("pacman_chomp.wav");
                             toREmove.add(blocks);
                             handler.getScoreManager().addPacmanCurrentScore(100);
-
+                            ghostFlash = true;
+                            for(BaseDynamic e: handler.getMap().getEnemiesOnMap()) {
+                            	if(e instanceof Ghost)
+                            		((Ghost) e).resetEdibleTimer();
+                            }
                         }
                     }
                 }
@@ -167,6 +177,16 @@ public class PacManState extends State {
     public void refresh() {
 
     }
+
+
+	public boolean isGhostFlash() {
+		return ghostFlash;
+	}
+
+
+	public void setGhostFlash(boolean ghostFlash) {
+		this.ghostFlash = ghostFlash;
+	}
 
 
 }
