@@ -107,6 +107,13 @@ public class Map {
     }
 
     public void reset() {
-    	
+      	handler.getMusicHandler().playEffect("pacman_death.wav");
+      	
+      	if(handler.getPacman().pacLife <= 0) {
+    		handler.getPacman().pacLife = 0;
+    		
+    	}
+      	handler.getPacman().facing = "Left";
+
     }
 }

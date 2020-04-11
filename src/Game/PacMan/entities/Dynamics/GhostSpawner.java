@@ -1,5 +1,6 @@
 package Game.PacMan.entities.Dynamics;
 
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -33,7 +34,15 @@ public class GhostSpawner {
 			BufferedImage ghostImage = ghostImage(colorType);
 			BaseDynamic ghost = new Ghost(x,y,width,height,ghostImage,handler);
 			handler.getMap().getEnemiesOnMap().add(ghost);
+			
 		}
+		
+//		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {   //Esto fue tratando
+//			 int aprete = 2;
+//			 BaseDynamic ghost = new Ghost(x,y,width,height,Images.ghostRed,handler);
+//			 map.addEnemy(ghost); 
+//			 System.out.println(" " + aprete);
+//		 }
 	}
 
 	private static BufferedImage ghostImage(int colorType) {

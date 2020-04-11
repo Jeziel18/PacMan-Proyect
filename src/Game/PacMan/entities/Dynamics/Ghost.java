@@ -185,6 +185,11 @@ public class Ghost extends BaseDynamic{
 			spawnTimer--;
 			//System.out.println(name + " has spawn timer of: " + spawnTimer);
 		}
+		
+		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)){
+			
+            
+        }
 	}
 
 	public void resetEdibleTimer() {

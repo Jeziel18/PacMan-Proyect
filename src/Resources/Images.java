@@ -62,9 +62,9 @@ public class Images {
     public static BufferedImage[] bound;
     public static BufferedImage intro;
     public static BufferedImage start;
-    public static BufferedImage pacMenu; //Foto del menu (Jeziel)
+    public static BufferedImage pacMenu; //New Menu Picture (Jeziel)
     public static BufferedImage smallDot;
-    public static BufferedImage[] pacmanDies;//(Jeziel)
+    public static BufferedImage[] pacmanDies;// Animation of PacMan dying (Jeziel)
     public static BufferedImage pacmanLife; // Big PacMan for Life (Jeziel)
     public static BufferedImage[] fruits;
 
@@ -190,16 +190,16 @@ public class Images {
 
             pacmanImageSheet = ImageIO.read(getClass().getResourceAsStream("/UI/SpriteSheets/PacMan/Background.png"));
             
-            //(Jeziel)
+            // New Menu Picture (Jeziel)
             pacMenu = ImageIO.read(getClass().getResourceAsStream("/UI/SpriteSheets/PacMan/pac-menu.png"));
             
             pacmanSpriteSheet = new SpriteSheet(pacmanImageSheet);
             map1 = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/PacManMaps/map1.png"));
             
-            ghostRed = pacmanSpriteSheet.crop(456,64,16,16); //Fantasma rojo
-            ghostPink = pacmanSpriteSheet.crop(456,80,16,16); //Fantasma rosita
-            ghostBlue = pacmanSpriteSheet.crop(456,96,16,16); //Fantasma azul
-            ghostOrange= pacmanSpriteSheet.crop(456,112,16,16); //Fantasma naranja
+            ghostRed = pacmanSpriteSheet.crop(456,64,16,16); //Red Ghost
+            ghostPink = pacmanSpriteSheet.crop(456,80,16,16); //Pink Ghost 
+            ghostBlue = pacmanSpriteSheet.crop(456,96,16,16); //Blue Ghost 
+            ghostOrange= pacmanSpriteSheet.crop(456,112,16,16); //Orange Ghost 
             
             ghostFlash[0] = pacmanSpriteSheet.crop(600,64,16,16);
             ghostFlash[1] = pacmanSpriteSheet.crop(600,64,16,16);
@@ -207,7 +207,7 @@ public class Images {
             ghostFlash[3] = pacmanSpriteSheet.crop(632,64,16,16);
             
             pacmanDots[0] = pacmanSpriteSheet.crop(643,18,16,16); //BigDot
-            pacmanDots[1] = pacmanSpriteSheet.crop(548,221,49,13); // Picture for Big Dot Animation (Jeziel)
+            pacmanDots[1] = pacmanSpriteSheet.crop(548,221,16,16); // Picture for Big Dot Animation (Jeziel)
             smallDot = pacmanSpriteSheet.crop(623,18,16,16); //Small dot
             pacmanLife = pacmanSpriteSheet.crop(519,15,32,34); //Big PacMan for Life (Jeziel)
 
@@ -228,7 +228,7 @@ public class Images {
             bound[14] = pacmanSpriteSheet.crop(479,208,16,16);//top
             bound[15] = pacmanSpriteSheet.crop(479,223,16,16);//bottom
             
-            //Animacion de PacMan Muriendo (Jeziel)
+            //PacMan Dead Animation (Jeziel)
             pacmanDies[0] = pacmanSpriteSheet.crop(488,0,15,15);//Complete
             pacmanDies[1] = pacmanSpriteSheet.crop(504,0,15,15);//Opening
             pacmanDies[2] = pacmanSpriteSheet.crop(520,0,15,15);//Opening
@@ -247,12 +247,12 @@ public class Images {
             pacmanDies[15] = pacmanSpriteSheet.crop(548,221,15,15);//Black for finishing animation
 
 
-            //Frutas (Jeziel)
+            //Fruits (Jeziel)
             fruits[0] = pacmanSpriteSheet.crop(489,49,15,15); //Cherry
-            fruits[1] = pacmanSpriteSheet.crop(504,49,15,15); //Fresa
-            fruits[2] = pacmanSpriteSheet.crop(521,49,15,15); //Melocoton
-            fruits[3] = pacmanSpriteSheet.crop(537,49,15,15); //Manzana
-            fruits[4] = pacmanSpriteSheet.crop(553,49,15,15); //Pera
+            fruits[1] = pacmanSpriteSheet.crop(504,49,15,15); //Strawberry
+            fruits[2] = pacmanSpriteSheet.crop(521,49,15,15); //Peach
+            fruits[3] = pacmanSpriteSheet.crop(537,49,15,15); //Apple
+            fruits[4] = pacmanSpriteSheet.crop(553,49,15,15); //Pear
             
             // Right Anims
             pacmanRight[0] = pacmanSpriteSheet.crop(473,1,12,13);
