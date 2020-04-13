@@ -20,15 +20,17 @@ public class PacMan extends BaseDynamic{
     public boolean moving = true,turnFlag = false;
     public Animation leftAnim,rightAnim,upAnim,downAnim, pacmanDedAnim;
     int turnCooldown = 20;
-    public int spawnx = 126 , spawny = 648; // Spawn original de PacMan (Jeziel)
-    public int ghostx = 342, ghosty = 342; // Spawn de los ghosts (Carlos)
-    public int pacLife = 3; // Vida de PacMan (Jeziel)
-    int spawncooldown = 5*60; // Cooldown para cuando pacman muere vuelva a spawn (Jeziel)
-    public boolean pacmandied = false; // Boolean para cuando pacman muere (vertical y horizontal collision) (Jeziel)
+    public int spawnx = 126 , spawny = 648; // Original spawn of PacMan (Jeziel)
+    public int ghostx = 342, ghosty = 342; // Spawn of ghosts (Carlos)
+    public int pacLife = 3; // Life of PacMan (Jeziel)
+    int spawncooldown = 5*60; // Cooldown for PacMan to spawn again (Jeziel)
+    public boolean pacmandied = false; // Boolean for pacmanDied (vertical y horizontal collision) (Jeziel)
     public boolean resetpacman = false;
     
     public boolean spawningGhost = false;
     public int spawningGhostCD = 60;
+    
+    
    
     
 
@@ -38,13 +40,13 @@ public class PacMan extends BaseDynamic{
         rightAnim = new Animation(128,Images.pacmanRight);
         upAnim = new Animation(128,Images.pacmanUp);
         downAnim = new Animation(128,Images.pacmanDown);  
-        pacmanDedAnim = new Animation(350, Images.pacmanDies);
+        pacmanDedAnim = new Animation(350, Images.pacmanDies); //PacMan dead animation
     }
 
     @Override
     public void tick(){
    
-    	for (BaseStatic block:handler.getMap().getBlocksOnMap()) {
+    	for (BaseStatic block:handler.getMap().getBlocksOnMap()) {  //Making the BigDot blink
             if(block instanceof BigDot){
                 ((BigDot)block).blinkBigDot.tick();
             }
@@ -106,8 +108,9 @@ public class PacMan extends BaseDynamic{
         else {
         	speed = 0;
         }
-        
+       
         if(pacmandied) {
+        	
         	if(spawncooldown <= 0) {
         		pacLife --;
         		x = spawnx;
@@ -115,21 +118,20 @@ public class PacMan extends BaseDynamic{
             	pacmanDedAnim.reset();
             	spawncooldown = 5*60;
             	speed = 1;
-            	if(pacLife <= 0) {
-            		pacLife = 0;
-            	}
-            	facing = "Left";
             	pacmandied = false;	
         	}
         	else {
         		speed = 0;
         		pacmanDedAnim.tick();
         		spawncooldown --;
+        		
         	}
+        	
+        	
         }
         
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
-//        	spawningGhost = true;
+
         	GhostSpawner.spawnGhost(342, 342, 18, 18, handler, handler.getMap());
         }
         
@@ -170,10 +172,15 @@ public class PacMan extends BaseDynamic{
             }
         }
         
-        //Se le puso el or(||) para que cuando aprietes "P", mate a PacMan (Jeziel)
+        
         for(BaseDynamic enemy : enemies){
             Rectangle enemyBounds = !toUp ? enemy.getTopBounds() : enemy.getBottomBounds();
-            if(!handler.getPacManState().isGhostFlash() || handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)) {
+            if(!handler.getPacManState().isGhostFlash()) {
+            	
+            	if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)){  //Phase 2: Implementing letter P to kill PacMan (Jeziel)
+                    pacmanDies = true;
+                }
+            	
             	if (pacmanBounds.intersects(enemyBounds)){
                     pacmanDies = true;
                     break;
@@ -181,10 +188,10 @@ public class PacMan extends BaseDynamic{
             }
         }
                 
-        if(pacmanDies) { 
+        if(pacmanDies) {
         	handler.getMap().reset();
           	pacmandied = true;
-          	handler.getMusicHandler().playEffect("pacman_death.wav");
+          	
           	
         }
     }
@@ -224,10 +231,15 @@ public class PacMan extends BaseDynamic{
 
         Rectangle pacmanBounds = toRight ? pacman.getRightBounds() : pacman.getLeftBounds();
         
-      //Se le puso el or(||) para que cuando aprietes "P", mate a PacMan (Jeziel)
+      
         for(BaseDynamic enemy : enemies){
             Rectangle enemyBounds = !toRight ? enemy.getRightBounds() : enemy.getLeftBounds();
-            if(!handler.getPacManState().isGhostFlash() || handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)) {
+            if(!handler.getPacManState().isGhostFlash()) {
+            	
+            	if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)){ //Phase 2: Implementing letter P to kill PacMan (Jeziel)
+                    pacmanDies = true;  
+                }
+            	
             	if (pacmanBounds.intersects(enemyBounds)) {
                     pacmanDies = true;
                     break;
@@ -238,7 +250,7 @@ public class PacMan extends BaseDynamic{
         if(pacmanDies) {
         	handler.getMap().reset();
         	pacmandied = true;
-        	handler.getMusicHandler().playEffect("pacman_death.wav");
+        	
         	    	
         }
 

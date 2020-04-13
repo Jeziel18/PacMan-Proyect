@@ -71,37 +71,9 @@ public class Ghost extends BaseDynamic{
 		}
 	}
 
-//		public void GhostSpawner() {
-//			Random select = new Random();
-//			int i = select.nextInt(4);
-//			
-//			if (i==0) {
-//				Ghost ghost1= new Ghost (this.x, this.y, this.width, this.height, this.sprite, handler);
-//			
-//				handler.getMap().addEnemy(ghost1);
-//			}
-//			else if (i==1) {
-//				Ghost ghost1= new Ghost (this.x, this.y, this.width, this.height, this.sprite, handler);
-//				this.sprite = Images.ghostRed;
-//			
-//				handler.getMap().addEnemy(ghost1);
-//			}
-//			else if (i==2) {
-//				Ghost ghost1= new Ghost (this.x, this.y, this.width, this.height, this.sprite, handler);
-//				this.sprite = Images.ghostOrange;
-//			
-//				handler.getMap().addEnemy(ghost1);
-//			}
-//			else if (i==3) {
-//				Ghost ghost1= new Ghost (this.x, this.y, this.width, this.height, this.sprite, handler);
-//				this.sprite = Images.ghostPink;
-//				handler.getMap().addEnemy(ghost1);
-//			}
-//		}
+
 	@Override
 	public void tick(){
-//		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_C))
-//			GhostSpawner.spawnGhost(turnCooldown, spawnTimer, failSafe, edibleTimer, handler, map);();
 		
 		if(justSpawned) {
 			velY = speed;
@@ -111,31 +83,11 @@ public class Ghost extends BaseDynamic{
 			if(y <= 288)
 				justSpawned = false;
 			
-//			if(!atSpawn) {
-//				if(x == ogCoords[0] && y == ogCoords[1]) {
-//					atSpawn = true;
-//				}
-//			}
-//			
-//			if(atSpawn) {
-//				System.out.println(name + " stuck at spawn.");
-//				if(failSafe <= 0) {
-//					failSafe = 10*60;
-//					for(BaseDynamic e: handler.getMap().getEnemiesOnMap()) {
-//						if(e instanceof Ghost) {
-//							if(e == this) {
-//								e = new Ghost(ogCoords[0],ogCoords[1],this.width,this.height,this.sprite,handler);
-//							}
-//						}
-//					}
-//				}else
-//					System.out.println(name + " has a failsafe of: " + failSafe);
-//					failSafe--;
-//			}
+
 		}
 		else if(spawnTimer <= 0){
 			if(ghostDied) {
-				//System.out.println(name + " has died.");
+				
 				ghostDied = false;
 				justSpawned = true;
 			}
@@ -214,8 +166,13 @@ public class Ghost extends BaseDynamic{
 		}
 		else {
 			spawnTimer--;
-			//System.out.println(name + " has spawn timer of: " + spawnTimer);
+			
 		}
+		
+		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)){
+			
+            
+        }
 	}
 
 	public void resetEdibleTimer() {
@@ -266,6 +223,8 @@ public class Ghost extends BaseDynamic{
 			spawnTimer = 5*60;
 			ghostDied = true;
 			handler.getScoreManager().addPacmanCurrentScore(500);
+			
+			
 		}
 	}
 
@@ -284,7 +243,7 @@ public class Ghost extends BaseDynamic{
 			if (brick instanceof BoundBlock) {
 				Rectangle brickBounds = !toUp ? brick.getTopBounds() : brick.getBottomBounds();
 				if (ghostBounds.intersects(brickBounds)) {
-					//rotate();
+					
 					return false;
 				}
 			}
@@ -324,6 +283,9 @@ public class Ghost extends BaseDynamic{
 			spawnTimer = 5*60;
 			ghostDied = true;
 			handler.getScoreManager().addPacmanCurrentScore(500);
+			
+			
+			
 		}else {
 
 			for (BaseStatic brick : bricks) {
@@ -355,7 +317,7 @@ public class Ghost extends BaseDynamic{
 			if (brick instanceof BoundBlock) {
 				Rectangle brickBounds = !toRight ? brick.getRightBounds() : brick.getLeftBounds();
 				if (ghostBounds.intersects(brickBounds)) {
-					//rotate();
+					
 					return false;
 				}
 			}

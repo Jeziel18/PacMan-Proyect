@@ -18,13 +18,13 @@ public class PacManState extends State {
 
     private UIManager uiManager;
     public String Mode = "Intro";
-    public int startCooldown = 60*4;//seven seconds for the music to finish
+    public int startCooldown = 60*4; //seven seconds for the music to finish
     
     //Ghosts are edible
     public boolean ghostFlash = false;
-    
+    boolean gameOver = false;  //Change to EndGame state
     public boolean reset = false;
-    public int reset_cooldown = 3*60;
+    public int reset_cooldown = 5*60;
     public PacManState(Handler handler){
         super(handler);
         handler.setMap(MapBuilder.createMap(Images.map1, handler));
@@ -49,7 +49,7 @@ public class PacManState extends State {
                         	if (blocks.getIsFruit()){
                         		handler.getMusicHandler().playEffect("pacman_chomp.wav");
                                 toREmove.add(blocks);
-                                handler.getScoreManager().addPacmanCurrentScore(120);	
+                                handler.getScoreManager().addPacmanCurrentScore(120);	//If it is fruit give 120
                         	}
                         	else {
                             handler.getMusicHandler().playEffect("pacman_chomp.wav");
@@ -65,7 +65,7 @@ public class PacManState extends State {
                             handler.getMusicHandler().playEffect("pacman_chomp.wav");
                             toREmove.add(blocks);
                             handler.getScoreManager().addPacmanCurrentScore(100);
-                            ghostFlash = true;
+                            ghostFlash = true; //Ghost is Edible
                             for(BaseDynamic e: handler.getMap().getEnemiesOnMap()) {
                             	if(e instanceof Ghost)
                             		((Ghost) e).resetEdibleTimer();
@@ -76,9 +76,32 @@ public class PacManState extends State {
                 for (BaseStatic removing: toREmove){
                     handler.getMap().getBlocksOnMap().remove(removing);
                 }
+                
+              //Phase 2, Give one life to PacMan
+                if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {
+                	handler.getPacman().pacLife ++;
+                	
+                	if(handler.getPacman().pacLife >= 3) {
+                    	handler.getPacman().pacLife = 3;
+                    }
+                }
+                
+                if(reset) {
+                	gameOver = true;
+                	handler.getPacman().pacLife = 3; //Reset PacMan life to 3
+                	Mode = "Intro"; // Change State to "Intro" when the game is over (Jeziel)	
+                	handler.getPacman().setX(handler.getPacman().spawnx); //Spawn PacMan on his original coordinates (x)
+                	handler.getPacman().setY(handler.getPacman().spawny); //Spawn PacMan on his original coordinates (y)
+                	handler.getScoreManager().setPacmanCurrentScore(0); //The score is set equal to 0
+                	handler.getPacman().facing = "Left";	
+                	startCooldown = 4*60;
+                	reset = false;
+                }
+                
             }else{
                 startCooldown--;
             }
+            
         }else if (Mode.equals("Menu")){
             if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER)){
                 Mode = "Stage";
@@ -90,25 +113,6 @@ public class PacManState extends State {
             }
         }
         
-        if(reset) {
-        	if(reset_cooldown <= 0) {
-        		reset_cooldown = 3*60;
-        		handler.getPacman().pacLife = 3;
-        		reset = false;
-        		startCooldown = 4*60;
-        		Mode = "Intro"; // Cambiamos el state cuando PacMan pierde todas las vidas (Por el momento "Menu")
-        		handler.getPacman().setX(handler.getPacman().spawnx); //Lo volvemos a spawn en sus coordenadas originales (X)
-        		handler.getPacman().setY(handler.getPacman().spawny); //Lo volvemos a spawn en sus coordenadas originales (Y)
-        		handler.getScoreManager().setPacmanCurrentScore(0); //El score se iguala a 0
-
-        	}
-        	else {
-        		reset_cooldown --;
-        	}
-        }
-
-
-
     }
 
     @Override
@@ -117,34 +121,22 @@ public class PacManState extends State {
         if (Mode.equals("Stage")){
             Graphics2D g2 = (Graphics2D) g.create();
             handler.getMap().drawMap(g2);
-            
-            //Phase 2, Darle vida a PacMan
-            if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {
-            	handler.getPacman().pacLife ++;
-            	
-            	if(handler.getPacman().pacLife >= 3) {
-                	handler.getPacman().pacLife = 3;
-                }
-            }
-            
-            
-            if(handler.getPacman().pacLife == 1) {
+                      
+            if(handler.getPacman().pacLife == 1) { //Change picture depending pacman life (1)
             	g.drawImage(Images.pacmanLife,1150,800,handler.getWidth()/10,handler.getHeight()/10,null); //Foto de vida de PacMan
             }
             
-            else if(handler.getPacman().pacLife == 2) {
+            else if(handler.getPacman().pacLife == 2) { //Change picture depending pacman life (2)
             	g.drawImage(Images.pacmanLife,1150,800,handler.getWidth()/10,handler.getHeight()/10,null); //Foto de vida de PacMan
             	g.drawImage(Images.pacmanLife,1400,800,handler.getWidth()/10,handler.getHeight()/10,null); 
             }
             else if(handler.getPacman().pacLife <= 0) { // Game Over
             	reset = true;
-            	g.setColor(Color.RED);
-                g.setFont(new Font("TimesRoman", Font.PLAIN, 150));
-                g.drawString("Game Over", 1150, 550);
+            	
                 
             }
             
-            else {
+            else { //Change picture depending pacman life (3)
             	g.drawImage(Images.pacmanLife,1150,800,handler.getWidth()/10,handler.getHeight()/10,null); //Foto de vida de PacMan
             	g.drawImage(Images.pacmanLife,1400,800,handler.getWidth()/10,handler.getHeight()/10,null); 
             	g.drawImage(Images.pacmanLife,1650,800,handler.getWidth()/10,handler.getHeight()/10,null);
@@ -158,17 +150,28 @@ public class PacManState extends State {
         }else if (Mode.equals("Menu")){
             g.drawImage(Images.start,0,0,handler.getWidth()/2,handler.getHeight(),null);
             
+            // Put high score in "Menu" 
         	g.setColor(Color.RED);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
             g.drawString("" + handler.getScoreManager().getPacmanHighScore(), 310, 70);
-        	
-
+            
         }else{
             g.drawImage(Images.intro,0,0,handler.getWidth()/2,handler.getHeight(),null);
             
+            // Put high score in "Intro" 
             g.setColor(Color.RED);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
             g.drawString("" + handler.getScoreManager().getPacmanHighScore(), 310, 70);
+            
+            if(gameOver) {
+            	 g.setColor(Color.RED);
+                 g.setFont(new Font("TimesRoman", Font.PLAIN, 120));
+                 g.drawString("GAME OVER!!", 1100, 500);
+            }
+            
+            
+            
+            
 
         }
     }

@@ -14,15 +14,15 @@ public class BaseStatic extends BaseEntity {
     boolean fruit =false;
     int fru = 0;
     
-    public void setFruit(){   //Setter de fruit
+    public void setFruit(){   //Setter for fruit
         fruit = true;
     }
 
-    public boolean getIsFruit(){  //Getter de fruit
+    public boolean getIsFruit(){  //Getter for fruit
         return fruit;
     }
     
-    public void setFruit(int f){   //Setter de fruit
+    public void setFruit(int f){   //Setter for fruit
         fru = f;
     } 
     

@@ -49,7 +49,7 @@ public class ScoreManager {
 
     public int getPacmanHighScore() {
     	
-    	 // update high score (Jeziel)
+    	 // Update high score (Jeziel)
         if(pacmanHighScore < pacmanCurrentScore) {
         	pacmanHighScore = pacmanCurrentScore;	
         }

@@ -81,7 +81,7 @@ public class Map {
                         break;
                 }
                 
-                //If que hace que la animacion corra cuando PacMan muere (Jeziel)
+                //If that makes pacman dead animation run (Jeziel)
                 if(handler.getPacman().pacmandied) {
                     g2.drawImage(((PacMan) entity).pacmanDedAnim.getCurrentFrame(), entity.x, entity.y, entity.width, entity.height, null);
                 }
@@ -108,6 +108,13 @@ public class Map {
     }
 
     public void reset() {
-    	
+      	handler.getMusicHandler().playEffect("pacman_death.wav"); //When pacman dies play music
+      	
+      	if(handler.getPacman().pacLife <= 0) { //Cap the life of pacman to 0
+    		handler.getPacman().pacLife = 0;
+    		
+    	}
+      	handler.getPacman().facing = "Left"; //Change the facing to left when pacman spawn again
+
     }
 }

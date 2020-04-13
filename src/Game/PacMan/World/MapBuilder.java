@@ -48,13 +48,12 @@ public class MapBuilder {
 					handler.setPacman((Game.PacMan.entities.Dynamics.PacMan) PacMan);
 				}else if(currentPixel == ghostC){
 					GhostSpawner.spawnGhost(xPos,yPos, pixelMultiplier,pixelMultiplier, handler, mapInCreation);
-					//BaseDynamic ghost = new Ghost(xPos,yPos,pixelMultiplier,pixelMultiplier,handler);
-					//mapInCreation.addEnemy(ghost);
+					
 				}else if(currentPixel == dotC){
 					BaseStatic dot = new Dot(xPos,yPos,pixelMultiplier,pixelMultiplier,handler);
 					
 					fruit ++;
-	                    if(fruit % 30 == 0){
+	                    if(fruit % 30 == 0){   //Make random fruit 1/30 chance of spawning
 	                    dot.setFruit();
 	                     dot.setFruit(frape);
 	                    if(frape < 4) {  

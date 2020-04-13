@@ -14,8 +14,7 @@ public class GhostSpawner {
 	public static boolean justStarted = true;
 	
 	public static void spawnGhost(int x, int y, int width, int height, Handler handler, Map map) {
-		//System.out.println("Ghost spawned at x: " + x + ", y: " + y);
-//		System.out.println(width + " " + height);
+		
 		if(justStarted) {
 			justStarted = false;
 			BaseDynamic ghost = new Ghost(x,y,width,height,Images.ghostRed,handler);
