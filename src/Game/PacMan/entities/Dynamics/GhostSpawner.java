@@ -15,7 +15,7 @@ public class GhostSpawner {
 	
 	public static void spawnGhost(int x, int y, int width, int height, Handler handler, Map map) {
 		//System.out.println("Ghost spawned at x: " + x + ", y: " + y);
-		System.out.println(width + " " + height);
+//		System.out.println(width + " " + height);
 		if(justStarted) {
 			justStarted = false;
 			BaseDynamic ghost = new Ghost(x,y,width,height,Images.ghostRed,handler);
@@ -32,8 +32,8 @@ public class GhostSpawner {
 			int colorType = randColor.nextInt(5)+1;
 			BufferedImage ghostImage = ghostImage(colorType);
 			BaseDynamic ghost = new Ghost(x,y,width,height,ghostImage,handler);
-			handler.getMap().getEnemiesOnMap().add(ghost);
-		}
+			map.addEnemy(ghost);
+			}
 	}
 
 	private static BufferedImage ghostImage(int colorType) {
@@ -51,4 +51,5 @@ public class GhostSpawner {
 		}
 		return null;
 	}
+	
 }

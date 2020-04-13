@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Ghost extends BaseDynamic{
 
@@ -28,7 +29,7 @@ public class Ghost extends BaseDynamic{
 	boolean isEdible = false;
 	boolean ghostDied = false;
 	int spawnTimer = 0;
-	int edibleTimer = 15*60;
+	int edibleTimer = 10*60;
 	
 	boolean atSpawn = false;
 	int failSafe = 10*60;
@@ -70,8 +71,38 @@ public class Ghost extends BaseDynamic{
 		}
 	}
 
+//		public void GhostSpawner() {
+//			Random select = new Random();
+//			int i = select.nextInt(4);
+//			
+//			if (i==0) {
+//				Ghost ghost1= new Ghost (this.x, this.y, this.width, this.height, this.sprite, handler);
+//			
+//				handler.getMap().addEnemy(ghost1);
+//			}
+//			else if (i==1) {
+//				Ghost ghost1= new Ghost (this.x, this.y, this.width, this.height, this.sprite, handler);
+//				this.sprite = Images.ghostRed;
+//			
+//				handler.getMap().addEnemy(ghost1);
+//			}
+//			else if (i==2) {
+//				Ghost ghost1= new Ghost (this.x, this.y, this.width, this.height, this.sprite, handler);
+//				this.sprite = Images.ghostOrange;
+//			
+//				handler.getMap().addEnemy(ghost1);
+//			}
+//			else if (i==3) {
+//				Ghost ghost1= new Ghost (this.x, this.y, this.width, this.height, this.sprite, handler);
+//				this.sprite = Images.ghostPink;
+//				handler.getMap().addEnemy(ghost1);
+//			}
+//		}
 	@Override
 	public void tick(){
+//		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_C))
+//			GhostSpawner.spawnGhost(turnCooldown, spawnTimer, failSafe, edibleTimer, handler, map);();
+		
 		if(justSpawned) {
 			velY = speed;
 			velX = speed;
@@ -160,13 +191,13 @@ public class Ghost extends BaseDynamic{
 				}else{
 					checkVerticalCollisions();
 				}
-
+				
 				// Check if ghost is edible
 				isEdible = handler.getPacManState().isGhostFlash();
 				if(isEdible) {
 					if(edibleTimer <= 0) {
 						handler.getPacManState().setGhostFlash(false);
-						edibleTimer = 15*60;
+						edibleTimer = 10*60;
 						System.out.println("Resetting edible...");
 					}
 					else {
@@ -194,7 +225,7 @@ public class Ghost extends BaseDynamic{
 	public void checkVerticalCollisions() {
 		Ghost ghost = this;
 		ArrayList<BaseStatic> bricks = handler.getMap().getBlocksOnMap();
-		ArrayList<BaseDynamic> enemies = handler.getMap().getEnemiesOnMap();
+		CopyOnWriteArrayList<BaseDynamic> enemies = handler.getMap().getEnemiesOnMap();
 
 		boolean ghostDies = false;
 		boolean toUp = moving && facing.equals("Up");
@@ -267,7 +298,7 @@ public class Ghost extends BaseDynamic{
 	public void checkHorizontalCollision(){
 		Ghost ghost = this;
 		ArrayList<BaseStatic> bricks = handler.getMap().getBlocksOnMap();
-		ArrayList<BaseDynamic> enemies = handler.getMap().getEnemiesOnMap();
+		CopyOnWriteArrayList<BaseDynamic> enemies = handler.getMap().getEnemiesOnMap();
 		velX = speed;
 		boolean ghostDies = false;
 		boolean toRight = moving && facing.equals("Right");

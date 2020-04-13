@@ -11,6 +11,7 @@ import Resources.Images;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PacMan extends BaseDynamic{
 
@@ -127,14 +128,14 @@ public class PacMan extends BaseDynamic{
         	}
         }
         
-        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_K)) {
-        	spawningGhost = true;
-        	GhostSpawner.spawnGhost(ghostx, ghosty, 18, 18, handler, handler.getMap());
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
+//        	spawningGhost = true;
+        	GhostSpawner.spawnGhost(342, 342, 18, 18, handler, handler.getMap());
         }
         
         if(spawningGhost) {
         	if(spawningGhostCD <= 0) {
-        		spawningGhostCD = 60;
+        		spawningGhostCD = 60*5;
         		spawningGhost = false;
         	}
         	else
@@ -148,7 +149,7 @@ public class PacMan extends BaseDynamic{
     public void checkVerticalCollisions() {
         PacMan pacman = this;
         ArrayList<BaseStatic> bricks = handler.getMap().getBlocksOnMap();
-        ArrayList<BaseDynamic> enemies = handler.getMap().getEnemiesOnMap();
+        CopyOnWriteArrayList<BaseDynamic> enemies = handler.getMap().getEnemiesOnMap();
         
         boolean pacmanDies = false;
         boolean toUp = moving && facing.equals("Up");
@@ -216,7 +217,7 @@ public class PacMan extends BaseDynamic{
     public void checkHorizontalCollision(){
         PacMan pacman = this;
         ArrayList<BaseStatic> bricks = handler.getMap().getBlocksOnMap();
-        ArrayList<BaseDynamic> enemies = handler.getMap().getEnemiesOnMap();
+        CopyOnWriteArrayList<BaseDynamic> enemies = handler.getMap().getEnemiesOnMap();
         velX = speed;
         boolean pacmanDies = false;
         boolean toRight = moving && facing.equals("Right");

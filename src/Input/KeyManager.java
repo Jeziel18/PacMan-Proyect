@@ -42,7 +42,6 @@ public class KeyManager implements KeyListener {
 		down = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN];
 		left = keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT];
 		right = keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT];
-
 		pausebutt = keys[KeyEvent.VK_ESCAPE];
 		killPacman = keys[KeyEvent.VK_P];
 		giveLife = keys[KeyEvent.VK_N];

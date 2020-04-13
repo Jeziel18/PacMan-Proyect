@@ -12,11 +12,12 @@ import Resources.Images;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Map {
 
     ArrayList<BaseStatic> blocksOnMap;
-    ArrayList<BaseDynamic> enemiesOnMap;
+    CopyOnWriteArrayList<BaseDynamic> enemiesOnMap;
     Handler handler;
     private double bottomBorder;
     private Random rand;
@@ -28,7 +29,7 @@ public class Map {
         this.handler=handler;
         this.rand = new Random();
         this.blocksOnMap = new ArrayList<>();
-        this.enemiesOnMap = new ArrayList<>();
+        this.enemiesOnMap = new CopyOnWriteArrayList<>();
         bottomBorder=handler.getHeight();
         this.mapBackground = this.rand.nextInt(6);
     }
@@ -98,7 +99,7 @@ public class Map {
         return blocksOnMap;
     }
 
-    public ArrayList<BaseDynamic> getEnemiesOnMap() {
+    public CopyOnWriteArrayList<BaseDynamic> getEnemiesOnMap() {
         return enemiesOnMap;
     }
 
