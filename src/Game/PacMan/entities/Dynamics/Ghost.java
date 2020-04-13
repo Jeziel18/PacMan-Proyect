@@ -240,6 +240,8 @@ public class Ghost extends BaseDynamic{
 			spawnTimer = 5*60;
 			ghostDied = true;
 			handler.getScoreManager().addPacmanCurrentScore(500);
+			//handler.getPacManState().setGhostFlash(false);   //Funcion, pero cambia a todos los ghost cuando uno muere
+			//edibleTimer = 15*60;
 		}
 	}
 
@@ -298,6 +300,10 @@ public class Ghost extends BaseDynamic{
 			spawnTimer = 5*60;
 			ghostDied = true;
 			handler.getScoreManager().addPacmanCurrentScore(500);
+			//handler.getPacManState().setGhostFlash(false);   //Funcion, pero cambia a todos los ghost cuando uno muere
+			//edibleTimer = 15*60;
+			
+			
 		}else {
 
 			for (BaseStatic brick : bricks) {
