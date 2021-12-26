@@ -20,7 +20,7 @@ public class Ghost extends BaseDynamic{
 	public String[] toFace = {"Left", "Right", "Up", "Down"};
 	public boolean moving = true,turnFlag = false;
 	public Animation leftAnim,rightAnim,upAnim,downAnim,ghostFlashing;
-	int turnCooldown = 30;
+	int turnCooldown = 30; 
 	int[] ogCoords = new int[2];
 	boolean justSpawned;
 
